@@ -63,3 +63,33 @@ def test_flags_dont_affect_others(registers: Registers):
             assert getattr(registers, flag) == 0, "{} should be unset".format(flag)
         for flag in set_flags:
             assert getattr(registers, flag) == 1, "{} should be set".format(flag)
+
+
+@pytest.mark.parametrize("register,bits,unsigned", [
+    ("program_counter", 16, True),
+    ("stack_pointer", 8, True),
+    ("status", 8, True),
+    ("accumulator", 8, False),
+    ("x", 8, False),
+    ("y", 8, False),
+])
+def test_correct_under_overflow(registers: Registers, register: str, bits: int, unsigned: bool):
+    if unsigned:
+        min = 0
+        max = 2 ** bits - 1
+    else:
+        min = -(2 ** (bits - 1))
+        max = 2 ** (bits - 1) - 1
+    assert getattr(registers, register) == 0, "{} should be 0".format(register)
+
+    setattr(registers, register, min)
+    assert getattr(registers, register) == min, "{} should be {}".format(register, min)
+
+    setattr(registers, register, max)
+    assert getattr(registers, register) == max, "{} should be {}".format(register, max)
+
+    setattr(registers, register, min - 1)
+    assert getattr(registers, register) == max, "{} should underflow to {}".format(register, max)
+
+    setattr(registers, register, max + 1)
+    assert getattr(registers, register) == min, "{} should overflow to {}".format(register, min)
