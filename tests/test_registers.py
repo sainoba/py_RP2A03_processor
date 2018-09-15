@@ -1,5 +1,5 @@
 import pytest
-from rp2a03.rp2a03 import Registers
+from rp2a03.registers import Registers
 
 
 @pytest.fixture
