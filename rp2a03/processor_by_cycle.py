@@ -3,7 +3,7 @@ class Processor:
         self.registers = registers
         self.memory = memory
 
-    def step(self) -> dict:
+    def tick(self) -> dict:
         opcode = self._fetch()
         _function = self._decode(opcode)
         cycles = self._execute(_function)
