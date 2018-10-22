@@ -3,7 +3,7 @@
 # py_RP2A03_processor
 Python emulator of the RP2A03/RP2A07 processor. 
 
-This project aims for simplicity, modularity, and 100%ish cpu cycle accuracy.
+This project aims for simplicity, modularity, and 100%-ish cpu cycle accuracy.
 
 ## DONE
 - Implementation of the CPU registers + tests 
